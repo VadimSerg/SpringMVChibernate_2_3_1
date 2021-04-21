@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UsersController</title>
+    <style>table th,
+    table td{padding:10px;}
+    row {
+        font-style: italic;
+    }
+    </style>
+</head>
+
+<body>
+    <h1>Users List</h1>
+
+    <a href="/showForm">Add User</a>
+    <br/><br>
+    <table border="4">
+
+        <tr>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Age</th>
+          <th>City</th>
+          <th>Action</th>
+        </tr>
+
+        <tr th:each="user:${users}">
+
+
+
+        <td th:utext="${user.firstName}">First name</td>
+        <td th:utext="${user.surname}">Surname</td>
+        <td th:utext ="${user.age}">Age</td>
+        <td th:utext="${user.city}">City</td>
+        <td>
+            <a th:href="@{/edit/{id}(id=${user.getId()})}">Edit</a>
+            <a th:href="@{/{id}(id=${user.getId()})}">Delete</a>
+        </td>
+        </tr>
+
+
+
+
+
+    </table>
+
+</body>
+</html>
