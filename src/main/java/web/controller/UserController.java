@@ -37,26 +37,22 @@ public class UserController {
         return "redirect:users";
     }
 
-     @GetMapping("/edit/{id}")
-     public  String showEditForm(@PathVariable("id") Integer id, Model model) {
+    @GetMapping("/edit/{id}")
+    public  String showEditForm(@PathVariable("id") Integer id, Model model) {
 
         model.addAttribute("user",userService.getUserById(id));
-         return  "editForm";
-     }
+        return  "editForm";
+    }
 
-     @PostMapping("/{id}")
-     public String update(@ModelAttribute("user") User user) {
+    @PostMapping("/{id}")
+    public String update(@ModelAttribute("user") User user) {
         userService.update(user);
         return  "redirect:users";
-     }
+    }
 
-     @GetMapping("/{id}")
-     public String delete(@PathVariable("id") Integer id) {
+    @GetMapping("/{id}")
+    public String delete(@PathVariable("id") Integer id) {
         userService.deleteUserById(id);
         return "redirect:users";
-     }
-
-
-
-
+    }
 }

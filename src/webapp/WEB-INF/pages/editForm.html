@@ -6,7 +6,7 @@
     <title>Info about user</title>
 </head>
 <body>
-<h1>Edit user</h1>
+<h1>Edit user </h1>
 <form th:action="@{/{id}(id = ${user.getId()})}"
       th:object="${user}"
       th:method="PATCH">
