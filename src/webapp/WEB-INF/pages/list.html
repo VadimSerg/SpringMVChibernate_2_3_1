@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>UsersController</title>
@@ -13,18 +13,18 @@
 </head>
 
 <body>
-    <h1>Users List</h1>
+    <h1>Список пользователей</h1>
 
-    <a href="/showForm">Add User</a>
+    <a href="/showForm">Добавить пользователя</a>
     <br/><br>
     <table border="4">
 
         <tr>
-          <th>First name</th>
-          <th>Last name</th>
-          <th>Age</th>
-          <th>City</th>
-          <th>Action</th>
+          <th>Имя</th>
+          <th>Фамилия</th>
+          <th>Возраст</th>
+          <th>Город</th>
+          <th>Действия</th>
         </tr>
 
         <tr th:each="user:${users}">
@@ -36,8 +36,8 @@
         <td th:utext ="${user.age}">Age</td>
         <td th:utext="${user.city}">City</td>
         <td>
-            <a th:href="@{/edit/{id}(id=${user.getId()})}">Edit</a>
-            <a th:href="@{/{id}(id=${user.getId()})}">Delete</a>
+            <a th:href="@{/edit/{id}(id=${user.getId()})}">Редактировать</a>
+            <a th:href="@{/{id}(id=${user.getId()})}">Удалить</a>
         </td>
         </tr>
 

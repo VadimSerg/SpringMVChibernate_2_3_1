@@ -10,16 +10,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
     @Column(name="firstName")
+   // @NotBlank(message = "Don't forget to input name")
+    //@Min(value = 3,message = "Input minimum 3 symbols")
     private String firstName;
 
+
     @Column(name= "surname")
+   // @NotBlank(message = "Dont forget to input surname")
     private String surname;
 
+   // @Size(min =0, message = "Age should be greater than 0")
     @Column(name="age")
     private Integer age;
 
+
     @Column(name="city")
+   // @NotBlank(message = "city shouldn't be empty")
     private  String city;
 
     public User() {
