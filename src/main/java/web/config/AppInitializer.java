@@ -29,29 +29,4 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
         encodingFilter.setForceEncoding(true);
         return  new Filter[] { encodingFilter };
     }
-
-//    @Override
-//    public  void onStartup(ServletContext aServletContext)  throws ServletException {
-//        super.onStartup(aServletContext);
-//        registerCharacterEncodingFilter(aServletContext);
-//        registerHiddenFieldFilter(aServletContext);
-//
-//    }
-//
-//    private void registerHiddenFieldFilter(ServletContext aServletContext) {
-//        aServletContext.addFilter("hiddenHttpMethodFilter", new HiddenHttpMethodFilter()).
-//                addMappingForUrlPatterns(null, true, "/*");
-//    }
-//
-//    private void registerCharacterEncodingFilter(ServletContext aContext) {
-//        EnumSet<DispatcherType> dispatcherTypes = EnumSet.of(DispatcherType.REQUEST,DispatcherType.FORWARD);
-//
-//        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-//        characterEncodingFilter.setEncoding("UTF-8");
-//        characterEncodingFilter.setForceEncoding(true);
-//
-//        FilterRegistration.Dynamic characterEncoding =
-//                aContext.addFilter("characterEncoding",characterEncodingFilter);
-//        characterEncoding.addMappingForUrlPatterns(dispatcherTypes, true, "/*");
-//    }
 }

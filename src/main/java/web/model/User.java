@@ -1,6 +1,10 @@
 package web.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="users")
@@ -12,22 +16,21 @@ public class User {
 
 
     @Column(name="firstName")
-   // @NotBlank(message = "Don't forget to input name")
-    //@Min(value = 3,message = "Input minimum 3 symbols")
+    @NotBlank(message = "Don't forget to input name")
     private String firstName;
 
 
     @Column(name= "surname")
-   // @NotBlank(message = "Dont forget to input surname")
+    @NotBlank(message = "Dont forget to input surname")
     private String surname;
 
-   // @Size(min =0, message = "Age should be greater than 0")
     @Column(name="age")
+    @Min(0) @Max(120) @NotNull(message ="Age should be greater than 0")
     private Integer age;
 
 
     @Column(name="city")
-   // @NotBlank(message = "city shouldn't be empty")
+    @NotBlank(message = "city shouldn't be empty")
     private  String city;
 
     public User() {

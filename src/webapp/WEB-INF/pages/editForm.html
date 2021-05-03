@@ -14,21 +14,25 @@
 <p>
     <label for="firstName"> Редактировать имя : </label>
     <input type="text" th:field ="*{firstName}" id="firstName"/>
+    <l style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" >Name error </l>
 </p>
 
 <p>
     <label for="surname" > Редактировать фамилию: </label>
     <input type="text" th:field ="*{surname}" id ="surname"/>
+    <l style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</l>
 </p>
 
 <p>
-    <label for="city" >Редактировать город </label>
+    <label for="city" >Редактировать город: </label>
     <input type="text" th:field="*{city}" id="city"/>
+    <l style="color: red" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">City Error</l>
 </p>
 
 <p>
-    <label for="age"> Редактировать возраст </label>
+    <label for="age"> Редактировать возраст: </label>
     <input type ="text" th:field="*{age}" id="age"/>
+    <l style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</l>
 </p>
 
 <p>
