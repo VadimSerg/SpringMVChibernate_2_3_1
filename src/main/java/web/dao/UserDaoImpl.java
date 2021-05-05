@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
     }
 
 
-    public User getUserById(Integer id) {
+    public User getUserById(long id) {
         return entityManager.find(User.class, id);
     }
 
@@ -36,7 +36,7 @@ public class UserDaoImpl implements UserDao {
     }
 
 
-    public void deleteUserById(Integer id) {
+    public void deleteUserById(long id) {
         entityManager.remove(getUserById(id));
     }
 }
