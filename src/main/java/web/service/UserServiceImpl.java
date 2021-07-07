@@ -21,19 +21,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(User user) {
-        userDao.saveUser(user);
+        userDao.save(user);
     }
 
 
     @Override
-    public List<User> getUsers() {
-        return userDao.getUsers();
+    public List<User> getAll() {
+        return userDao.getAll();
     }
 
 
     @Override
     public User getUserById(long id) {
-        return userDao.getUserById(id);
+        return  userDao.getOneById(id);
     }
 
 
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(long id) {
-        userDao.deleteUserById(id);
+        userDao.deleteById(id);
     }
 
 }

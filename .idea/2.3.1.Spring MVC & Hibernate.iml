@@ -11,10 +11,27 @@
     </facet>
     <facet type="Spring" name="Spring">
       <configuration>
-        <fileset id="fileset" name="Spring Application Context" removed="false">
+        <fileset id="initializer web.config.AppInitializer servlet context" name="MVC dispatcher initializer servlet context" removed="true">
+          <file>file://$MODULE_DIR$/src/main/java/web/config/WebConfig.java</file>
+        </fileset>
+        <fileset id="initializer web.config.AppInitializer root context" name="MVC dispatcher initializer root context" removed="true">
           <file>file://$MODULE_DIR$/src/main/java/web/config/AppConfig.java</file>
           <file>file://$MODULE_DIR$/src/main/java/web/config/WebConfig.java</file>
         </fileset>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/main/java/web/config/AppConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/web/config/SecurityConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/web/config/WebConfig.java</file>
+        </fileset>
+      </configuration>
+    </facet>
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <datasource-mapping>
+          <factory-entry name="entityManagerFactoryBean" />
+        </datasource-mapping>
+        <naming-strategy-map />
       </configuration>
     </facet>
   </component>
@@ -58,6 +75,9 @@
     <orderEntry type="library" name="Maven: com.sun.istack:istack-commons-runtime:3.0.7" level="project" />
     <orderEntry type="library" name="Maven: org.jvnet.staxex:stax-ex:1.8" level="project" />
     <orderEntry type="library" name="Maven: com.sun.xml.fastinfoset:FastInfoset:1.2.15" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:5.2.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:5.2.0.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:5.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate.validator:hibernate-validator:6.2.0.Final" level="project" />
     <orderEntry type="library" name="Maven: jakarta.validation:jakarta.validation-api:2.0.2" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:2.0.1.Final" level="project" />
