@@ -1,29 +1,24 @@
 package web.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import web.dao.UserDaoImpl;
-import web.model.Role;
+import web.dao.UserDao;
 import web.model.User;
-import web.config.SecurityConfig;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService, UserService {
 
-    private final UserDaoImpl userDao;
-    private final SecurityConfig securityConfig;
+    private final UserDao userDao;
+ //   private final SecurityConfig securityConfig;
 
 
-    @Autowired
-    public UserDetailsServiceImpl(UserDaoImpl userDao, SecurityConfig securityConfig) {
+    //@Autowired
+    public UserDetailsServiceImpl(UserDao userDao) {
         this.userDao = userDao;
-        this.securityConfig = securityConfig;
     }
 
     @Override
@@ -46,8 +41,8 @@ public class UserDetailsServiceImpl implements UserDetailsService, UserService {
 //        if (userFromDB!=null) {
 //            return;
 //        }
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
-        user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
+//        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+//        user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
         userDao.save(user);
     }
 
