@@ -41,12 +41,12 @@ public class User implements UserDetails {
     @Column(name ="password")
     private String password;
 
-//    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
-//    @JoinTable(name ="user_role" ,
-//            joinColumns =@JoinColumn(name = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinTable(name ="usersss_role" ,
+            joinColumns =@JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
 
-    @ManyToMany
+   // @ManyToMany
     private Set<Role> roles;
             //= new HashSet<>();
 
