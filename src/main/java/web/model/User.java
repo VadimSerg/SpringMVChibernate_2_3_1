@@ -20,9 +20,9 @@ public class User implements UserDetails {
     private Long id;
 
 
-    @Column(name="firstName")
+    @Column(name="username")
     @NotBlank(message = "Don't forget to input name")
-    private String firstName;
+    private String username;
 
 
     @Column(name= "surname")
@@ -42,13 +42,11 @@ public class User implements UserDetails {
     private String password;
 
     @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
-    @JoinTable(name ="usersss_role" ,
+    @JoinTable(name ="user_roles" ,
             joinColumns =@JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
 
-   // @ManyToMany
     private Set<Role> roles;
-            //= new HashSet<>();
 
     public User() {
     }
@@ -61,12 +59,12 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUserName() {
+        return username ;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getSurname() {
@@ -94,8 +92,8 @@ public class User implements UserDetails {
     }
 
 
-    public User(String firstName, String surname, Integer age, String city) {
-        this.firstName = firstName;
+    public User(String username, String surname, Integer age, String city) {
+        this.username = username;
         this.surname = surname;
         this.age = age;
         this.city = city;
@@ -117,11 +115,11 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public User(Long id, @NotBlank(message = "Don't forget to input name") String firstName,
+    public User(Long id, @NotBlank(message = "Don't forget to input name") String username,
                 String password, Set<Role> roles) {
 
         this.id = id;
-        this.firstName = firstName;
+        this.username = username;
         this.password = password;
         this.roles = roles;
     }
@@ -129,7 +127,7 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "User{" +
-                "firstName='" + firstName + '\'' +
+                "firstName='" + username + '\'' +
                 ", surname='" + surname + '\'' +
                 ", age=" + age +
                 ", email='" + city + '\'' +
@@ -150,7 +148,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return firstName;
+        return username;
     }
 
     @Override

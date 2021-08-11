@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import web.config.security.handler.LoginSuccessHandler;
 
 
@@ -24,14 +23,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private  final LoginSuccessHandler loginSuccessHandler;
 
    @Autowired
-    public SecurityConfig(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, LoginSuccessHandler loginSuccessHandler) {
+    public SecurityConfig(@Qualifier("userServiceImpl") UserDetailsService userDetailsService, LoginSuccessHandler loginSuccessHandler) {
         this.userDetailsService = userDetailsService;
         this.loginSuccessHandler = loginSuccessHandler;
     }
 
 //    @Autowired
 //    protected void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-//      //  auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("ADMINN");
+//      //  auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("ADMIN");
 //        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 //    }
 
@@ -42,33 +41,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http .formLogin()  //.csrf().disable()
-                .loginPage("/")
-               // .successHandler(loginSuccessHandler)
+        http .csrf().disable()
+                .formLogin()
+                .loginPage("/login")
+                .successHandler(loginSuccessHandler)
                 .loginProcessingUrl("/login")
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
                 .permitAll();
-
-        http.logout()
-                .permitAll()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
-                .logoutSuccessUrl("/login? logout")
-                .and().csrf().disable();
+//
+//        http.logout()
+//                .permitAll()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//                .logoutSuccessUrl("/login?logout")
+//                .logoutSuccessUrl("/login? logout")
+//                .and().csrf().disable();
 
         http.authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/user").access("hasAnyRole('ROLE_USER')")
-                .antMatchers("/admin").access("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+                .antMatchers("/login").authenticated()
+                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/user").hasAnyRole("USER","ADMIN")
                 .and().formLogin().successHandler(loginSuccessHandler);
 
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // а смысл в нем?? если он
-        // небезопасный?? почему не бикрипт
+//        return NoOpPasswordEncoder.getInstance() ;
+         return  new BCryptPasswordEncoder(); // а смысл в нем?? если он
+
     }
+
+
 
 }

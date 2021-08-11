@@ -1,5 +1,7 @@
 package web.service;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.dao.UserDao;
@@ -7,7 +9,7 @@ import web.model.User;
 
 import java.util.List;
 
-@Service
+@Service(value="userServiceImpl")
 @Transactional
 public class UserServiceImpl implements UserService {
 
@@ -46,6 +48,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserById(long id) {
         userDao.deleteById(id);
+    }
+
+//    @Override
+//    public UserDetails getUserByUsername(String username) {
+//        return userDao.getUserByName(username);
+//    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User myUser = userDao.getUserByName(username);
+
+        if (myUser==null) {
+           throw new UsernameNotFoundException("User " + username + " not found");
+        }
+
+        return  myUser;
     }
 
 }

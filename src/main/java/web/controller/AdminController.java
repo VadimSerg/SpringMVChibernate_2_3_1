@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import web.model.User;
 import web.service.UserService;
 
 @Controller
@@ -13,8 +14,9 @@ import web.service.UserService;
 public class AdminController {
 
 
-    @GetMapping(value="/")
+    @GetMapping(value="/login")
     public  String getLoginPage() {
+        System.out.println("Log::");
         return "login";
     }
 
@@ -25,11 +27,34 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/admin/**")
     public String getUsers(Model model) {
         model.addAttribute("users",userService.getAll());
         return "list";
     }
+
+
+    @GetMapping("/showForm")
+    public  String showFormForAddingUser(Model model) {
+        User user = new User();
+        model.addAttribute("user",user);
+        return  "newUser";
+    }
+
+
+
+    //    @GetMapping("/showForm")
+//    public String showFormForAddingUser(Model model) {
+//        User user = new User();
+//        model.addAttribute("user", user);
+//        return "newUser";
+//    }
+
+
+
+
+
+
 
 
 

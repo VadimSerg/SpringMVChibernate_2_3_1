@@ -14,21 +14,11 @@
 //@Controller
 //@RequestMapping("/")
 //public class UserController {
-//
-//    private final UserService userService;
-//
-//    @Autowired
-//    public UserController(@Qualifier("userServiceImpl") UserService userService){
-//        this.userService = userService;
-//    }
-//
-//    @GetMapping("/")
-//    public String getUsers(Model model)
-//    {
-//        model.addAttribute("users",userService.getAll());
-//        return "list";
-//    }
-//
+
+
+
+
+
 //    @GetMapping("/showForm")
 //    public String showFormForAddingUser(Model model) {
 //        User user = new User();

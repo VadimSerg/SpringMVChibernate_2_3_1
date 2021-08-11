@@ -24,6 +24,7 @@
           <th>Фамилия</th>
           <th>Возраст</th>
           <th>Город</th>
+          <th>Роли</th>
           <th>Действия</th>
         </tr>
 
@@ -31,10 +32,20 @@
 
 
 
-        <td th:utext="${user.firstName}">First name</td>
+        <td th:utext="${user.userName}">First name</td>
         <td th:utext="${user.surname}">Surname</td>
         <td th:utext ="${user.age}">Age</td>
         <td th:utext="${user.city}">City</td>
+
+            <td >
+                <ul>
+                    <th:block th:each="role : ${user.roles}">
+                        <li th:text="${role.role}">ROLE_USER</li>
+                    </th:block>
+                </ul>
+            </td>
+
+
         <td>
             <a th:href="@{/edit/{id}(id=${user.getId()})}">Редактировать</a>
             <a th:href="@{/{id}(id=${user.getId()})}">Удалить</a>
