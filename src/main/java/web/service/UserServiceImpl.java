@@ -50,10 +50,6 @@ public class UserServiceImpl implements UserService {
         userDao.deleteById(id);
     }
 
-//    @Override
-//    public UserDetails getUserByUsername(String username) {
-//        return userDao.getUserByName(username);
-//    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

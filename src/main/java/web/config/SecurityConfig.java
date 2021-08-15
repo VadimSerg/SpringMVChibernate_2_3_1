@@ -57,11 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .logoutSuccessUrl("/login? logout")
 //                .and().csrf().disable();
 
-        http.authorizeRequests()
+          http  .authorizeRequests()
                 .antMatchers("/login").authenticated()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("USER","ADMIN")
-                .and().formLogin().successHandler(loginSuccessHandler);
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER","ADMIN")
+                .anyRequest().authenticated();
 
     }
 

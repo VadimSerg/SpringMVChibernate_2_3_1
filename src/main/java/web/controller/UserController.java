@@ -19,46 +19,6 @@
 
 
 
-//    @GetMapping("/showForm")
-//    public String showFormForAddingUser(Model model) {
-//        User user = new User();
-//        model.addAttribute("user", user);
-//        return "newUser";
-//    }
-//
-//    @PostMapping(value = "/saveUser")
-//    public String saveUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult)  {
-//        if (bindingResult.hasErrors()) {
-//            return "newUser";
-//        }
-//        userService.saveUser(user);
-//        return "redirect:/ ";
-//    }
-//
-//    @GetMapping("/edit/{id}")
-//    public  String showEditForm(@PathVariable("id") Integer id, Model model) {
-//
-//        model.addAttribute("user",userService.getUserById(id));
-//        return  "editForm";
-//    }
-//
-//    @PostMapping("/{id}")
-//    public String update(@Valid @ModelAttribute("user") User user,BindingResult bindingResult) {
-//
-//        if (bindingResult.hasErrors()) {
-//            return "editForm";
-//        }
-//        userService.update(user);
-//        return  "redirect:/";
-//    }
-//
-//    @GetMapping("/{id}")
-//    public String delete(@PathVariable("id") Integer id) {
-//        userService.deleteUserById(id);
-//        return "redirect:/";
-//    }
-//
-//
 //    //copied from example
 //
 ////
