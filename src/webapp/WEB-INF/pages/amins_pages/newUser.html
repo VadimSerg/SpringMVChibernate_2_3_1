@@ -7,6 +7,8 @@
 </head>
 <body>
 <h1>Регистрация пользователя </h1>
+<a href ="/logout">Log out</a>
+<br/><br>
  <form th:action= "@{/saveUser}"
       th:object="${user}"
       th:method="POST">
@@ -34,6 +36,16 @@
         <input type ="text" th:field="*{age}" id="age"/>
         <e style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">City Error</e>
      </p>
+
+
+     <p>
+         <label for="password"> Введите пароль: </label>
+         <input type ="text" th:field="*{password}" id="password"/>
+
+     </p>
+
+
+
 
      <p>
         <input type="submit" value="сохранить">

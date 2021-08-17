@@ -1,11 +1,13 @@
 package web.dao;
 
+import org.springframework.stereotype.Component;
 import web.model.Role;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+@Component
 public class RoleDaoImpl   {
 
     @PersistenceContext

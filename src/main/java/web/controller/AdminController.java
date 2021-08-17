@@ -1,9 +1,8 @@
 package web.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,10 +17,6 @@ import javax.validation.Valid;
 public class AdminController {
 
 
-//    @GetMapping("/")
-//    public String greetings()  {
-//        return "hello_page";
-//    }
 
     @GetMapping(value="/login")
     public  String getLoginPage() {
@@ -29,11 +24,22 @@ public class AdminController {
         return "login";
     }
 
-    private final UserService userService;
+//    private final UserService userService;
+ //   private final RoleService roleService;
 
-    @Autowired
-    public AdminController(@Qualifier("userServiceImpl") UserService userService){
+//    @Autowired
+//    public AdminController(@Qualifier("userServiceImpl") UserService userService, @Qualifier("roleServiceImpl") RoleService roleService){
+//        this.userService = userService;
+//        this.roleService = roleService;
+//    }
+
+
+    private final UserService userService;
+    private final UserDetailsService userDetailsService;
+
+    public AdminController(UserService userService, UserDetailsService userDetailsService) {
         this.userService = userService;
+        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping("/admin")
@@ -51,11 +57,14 @@ public class AdminController {
     }
 
 
+
     @PostMapping(value = "/saveUser")
     public String saveUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult)  {
+
         if (bindingResult.hasErrors()) {
             return "amins_pages/newUser";
         }
+
         userService.saveUser(user);
         return "redirect:/admin";
     }
@@ -89,7 +98,7 @@ public class AdminController {
     //Code for user's page
     @GetMapping("/user")
     public String showUserPage(Model model, @AuthenticationPrincipal UserDetails logedInUser) {
-        User user = (User) userService.loadUserByUsername(logedInUser.getUsername());
+        User user = (User) userDetailsService.loadUserByUsername(logedInUser.getUsername());
      //   model.addAttribute("user",userService.loadUserByUsername(logedInUser.getUsername()));
         model.addAttribute("user",user);
         return  "userPage";

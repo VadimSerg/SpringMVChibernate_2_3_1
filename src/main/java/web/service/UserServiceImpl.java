@@ -1,7 +1,6 @@
 package web.service;
 
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.dao.UserDao;
@@ -14,15 +13,19 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
 
-
-    public UserServiceImpl(UserDao userDao) {
+   public UserServiceImpl(UserDao userDao,PasswordEncoder passwordEncoder) {
        this.userDao = userDao;
-    }
+       this.passwordEncoder = passwordEncoder;
+   }
+
 
 
     @Override
     public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(user.getRoles());
         userDao.save(user);
     }
 
@@ -41,7 +44,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user) {
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.update(user);
+
     }
 
 
@@ -51,15 +57,5 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User myUser = userDao.getUserByName(username);
-
-        if (myUser==null) {
-           throw new UsernameNotFoundException("User " + username + " not found");
-        }
-
-        return  myUser;
-    }
 
 }
