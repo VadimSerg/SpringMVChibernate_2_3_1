@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
      // user.setRoles(user.getRoles());
 
         System.out.println("************SAVING PROCESS********************************");
-
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.save(user);
 
         System.out.println("UserID:" + user.getId() +

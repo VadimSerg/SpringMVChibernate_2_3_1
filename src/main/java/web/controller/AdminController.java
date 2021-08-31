@@ -76,9 +76,6 @@ public class AdminController {
 
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-
 
         user.setRoles(roles);
         userService.saveUser(user);
