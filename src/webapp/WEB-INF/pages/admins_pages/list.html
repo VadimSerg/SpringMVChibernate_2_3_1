@@ -18,7 +18,10 @@
     <a href="/showForm">Добавить пользователя</a>
 
     <br/><br>
-    <a href ="/logout">Log out</a>
+
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout"/>
+    </form>
     <br/><br>
 
     <table border="4">
@@ -44,7 +47,7 @@
             <td >
                 <ul>
                     <th:block th:each="role : ${user.roles}">
-                        <li th:text="${role.role}">ROLE_USER</li>
+                        <li th:text="${role.roleName}">ROLE_USER</li>
                     </th:block>
                 </ul>
             </td>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:Roles="http://www.w3.org/1999/xhtml"
+      xmlns:type="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -43,6 +44,22 @@
          <input type ="text" th:field="*{password}" id="password"/>
 
      </p>
+
+     <p>
+         <label> Roles:</label>
+         <input type="checkbox" name ="roles_checkbox"
+                th:each ="role: ${AllRoles}"
+                th:text ="${role.getRoleName()}"
+                th:value="${role.getRoleName()}"
+
+         />
+
+
+     </p>
+
+
+
+
 
 
 

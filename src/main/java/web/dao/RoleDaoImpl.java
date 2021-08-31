@@ -8,38 +8,43 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Component
-public class RoleDaoImpl   {
+public class RoleDaoImpl  implements RoleDao  {
 
     @PersistenceContext
     private EntityManager entityManager;
 
 
-    void save(Role role) {
+    public void save(Role role) {
         entityManager.persist(role);
+
+    }
+
+    public List <Role> getAllRoles() {
+
+        return   entityManager.createQuery("select r  from  Role r ",Role.class).getResultList();
+
     }
 
 
-    List <Role> getAll() {
-      return   entityManager.createQuery("select r  from  Role r ",Role.class).getResultList();
-    }
+    public Role getRoleById(long id) {
 
-
-    Role getOneById(long id) {
         return  entityManager.find(Role.class, id);
     }
 
-    void  update(Role role) {
+    public void  update(Role role) {
+
         entityManager.merge(role);
     }
 
 
-    void deleteById(long id) {
-         entityManager.remove(getOneById(id));
+    public void deleteById(long id) {
+
+        entityManager.remove(getRoleById(id));
     }
 
-    Role getAuthorityByName(String name) {
+    public Role getAuthorityByName(String name) {
         return  entityManager.
-                createQuery("select r from Role r where r.role =:role" ,Role.class).
+                createQuery("select r from Role r where r.roleName =:role" ,Role.class).
                 setParameter("role",name).getSingleResult();
     }
 

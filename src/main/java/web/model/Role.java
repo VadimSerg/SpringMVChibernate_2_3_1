@@ -3,6 +3,7 @@ package web.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "roles")
@@ -13,7 +14,7 @@ public class Role implements GrantedAuthority {
     private Long id;
 
     @Column(name ="role")
-    private  String role;
+    private  String roleName;
 
 
 //    @ManyToMany(cascade = CascadeType.MERGE)
@@ -25,9 +26,22 @@ public class Role implements GrantedAuthority {
 //    private Set<User> users;
 
 
-    public Role(Long id, String role) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role)) return false;
+        Role role = (Role) o;
+        return id.equals(role.id) && roleName.equals(role.roleName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, roleName);
+    }
+
+    public Role(Long id, String roleName) {
         this.id = id;
-        this.role = role;
+        this.roleName = roleName;
     }
 
     public Role() {
@@ -43,26 +57,25 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleName(String roleName) {
+
+        this.roleName = roleName;
     }
+
 
     @Override
     public String getAuthority() {
-        return role;
+        return roleName;
     }
 
-//
-//    public void setUsers(Set<User> users) {
-//        this.users = users;
-//    }
-//
-//
-//    public Set<User> getUsers() {
-//        return  users;
-//    }
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleName='" + getRoleName() + '\'' +
+                '}';
+    }
 }

@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getOneById(long id) {
+    public User getUserById(long id) {
         return entityManager.find(User.class, id);
     }
 
@@ -37,7 +37,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void deleteById(long id) {
-        entityManager.remove(getOneById(id));
+        entityManager.remove(getUserById(id));
     }
 
     @Override

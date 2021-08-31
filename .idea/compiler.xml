@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
-      <module name="2.3.1.Spring MVC &amp; Hibernate" target="6" />
+      <module name="2.3.1.Spring MVC &amp; Hibernate" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

@@ -9,6 +9,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,6 +18,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
 
@@ -39,6 +41,7 @@ public class User implements UserDetails {
     private  String city;
 
     @Column(name ="password")
+    @NotBlank(message = "password shouldn't be empty")
     private String password;
 
     @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
@@ -46,7 +49,7 @@ public class User implements UserDetails {
             joinColumns =@JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
 
-    private Set<Role> roles;
+    private Set<Role> roles =new HashSet<>();
 
     public User() {
     }
@@ -92,11 +95,40 @@ public class User implements UserDetails {
     }
 
 
-    public User(String username, String surname, Integer age, String city) {
+    public User(@NotBlank(message = "Don't forget to input name") String username, String surname, Integer age, String city, Set<Role> roles) {
         this.username = username;
         this.surname = surname;
         this.age = age;
         this.city = city;
+        this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        if (!id.equals(user.id)) return false;
+        if (!username.equals(user.username)) return false;
+        if (!surname.equals(user.surname)) return false;
+        if (!age.equals(user.age)) return false;
+        if (!city.equals(user.city)) return false;
+        if (!password.equals(user.password)) return false;
+        return roles.equals(user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + username.hashCode();
+        result = 31 * result + surname.hashCode();
+        result = 31 * result + age.hashCode();
+        result = 31 * result + city.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + roles.hashCode();
+        return result;
     }
 
     public void setId(Long id) {
@@ -115,14 +147,6 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public User(Long id, @NotBlank(message = "Don't forget to input name") String username,
-                String password, Set<Role> roles) {
-
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-    }
 
     @Override
     public String toString() {
@@ -136,9 +160,16 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+       // List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
+//        Set<SimpleGrantedAuthority> grantedAuthorities = new HashSet<>();
+//        for (Role role:roles) {
+//            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+//        }
+//
+//
+//        return grantedAuthorities;
 
-        return roles;
-
+        return  getRoles();
     }
 
     @Override
