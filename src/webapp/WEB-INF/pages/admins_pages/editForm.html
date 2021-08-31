@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Info about user</title>
+</head>
+<body>
+<h1>Редактирование пользователя</h1>
+<a href ="/logout">Log out</a>
+<br/><br>
+<form th:action="@{/{id}(id = ${user.getId()})}"
+      th:object="${user}"
+      th:method="PATCH">
+
+    <p>
+        <label for="username"> Редактировать имя пользователя : </label>
+        <input type="text" th:field ="*{username}" id="username"/>
+        <l style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{username}" >Name error </l>
+    </p>
+
+    <p>
+        <label for="surname" > Редактировать фамилию: </label>
+        <input type="text" th:field ="*{surname}" id ="surname"/>
+        <l style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname error</l>
+    </p>
+
+    <p>
+        <label for="city" >Редактировать город: </label>
+        <input type="text" th:field="*{city}" id="city"/>
+        <l style="color: red" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">City Error</l>
+    </p>
+
+    <p>
+        <label for="age"> Редактировать возраст: </label>
+        <input type ="text" th:field="*{age}" id="age"/>
+        <l style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</l>
+    </p>
+
+    <p>
+        <label for="age"> Редактировать пароль: </label>
+        <input type ="text" th:field="*{password}" id="password"/>
+        <l style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</l>
+    </p>
+
+    <p>
+        <label> Roles:</label>
+        <input type="checkbox" name ="roles_checkbox"
+               th:each ="role: ${AllRoles}"
+               th:text ="${role.getRoleName()}"
+               th:value="${role.getId()}"
+
+        />
+
+
+    </p>
+
+
+
+    <p>
+        <input type="submit" value="сохранить изменения">
+    </p>
+
+    <p>
+
+    </p>
+
+
+</form>
+
+
+</body>
+</html>
