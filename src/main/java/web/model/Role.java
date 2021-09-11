@@ -3,6 +3,7 @@ package web.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +15,7 @@ public class Role implements GrantedAuthority {
     private Long id;
 
     @Column(name ="role")
+    @NotEmpty(message = "Don't forget to input role name")
     private  String roleName;
 
 
@@ -42,6 +44,9 @@ public class Role implements GrantedAuthority {
     public Role(Long id, String roleName) {
         this.id = id;
         this.roleName = roleName;
+    }
+    public Role(String roleName) {
+        this.roleName =roleName;
     }
 
     public Role() {

@@ -3,7 +3,6 @@ package web.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import web.dao.RoleDao;
 import web.dao.UserDao;
 import web.model.User;
 
@@ -14,12 +13,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
-    private  final RoleDao roleDao;
     private final PasswordEncoder passwordEncoder;
 
-   public UserServiceImpl(UserDao userDao, RoleDao roleDao, PasswordEncoder passwordEncoder) {
+   public UserServiceImpl(UserDao userDao,PasswordEncoder passwordEncoder) {
        this.userDao = userDao;
-       this.roleDao = roleDao;
        this.passwordEncoder = passwordEncoder;
    }
 
@@ -35,6 +32,10 @@ public class UserServiceImpl implements UserService {
 
         System.out.println("************SAVING PROCESS********************************");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+
+
+
         userDao.save(user);
 
         System.out.println("UserID:" + user.getId() +

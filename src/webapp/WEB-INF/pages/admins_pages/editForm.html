@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit User</title>
 </head>
 <body>
 
@@ -25,7 +25,7 @@
     <p>
         <label for="username"> Редактировать имя пользователя : </label>
         <input type="text" th:field ="*{username}" id="username"/>
-        <l style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{username}" >Name error </l>
+        <l style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" >Name error </l>
     </p>
 
     <p>
@@ -57,7 +57,7 @@
         <input type="checkbox" name ="roles_checkbox"
                th:each ="role: ${AllRoles}"
                th:text ="${role.getRoleName()}"
-               th:value="${role.getId()}"
+               th:value="${role.getRoleName()}"
 
         />
 

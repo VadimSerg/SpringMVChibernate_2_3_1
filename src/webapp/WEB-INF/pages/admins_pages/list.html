@@ -19,6 +19,10 @@
 
     <br/><br>
 
+    <a href="/showFormRoles"> Добавить роли </a>
+    <br/><br>
+
+
 
 
     <form th:action="@{/logout}" method="post">
@@ -37,7 +41,7 @@
           <th>Действия</th>
         </tr>
 
-        <tr th:each="user:${users}">
+        <tr th:each="user:${usersSet}">
 
 
 
@@ -66,6 +70,44 @@
 
 
     </table>
+
+
+<br/><br>
+
+    <label>Список ролей </label>
+    <table border="4">
+
+        <tr>
+            <th>id roles</th>
+            <th>Role Name</th>
+            <th>Действия</th>
+        </tr>
+
+        <tr th:each="role:${RolesSet}">
+
+
+
+            <td th:utext="${role.id}">id </td>
+            <td th:utext="${role.getRoleName()}">Roles</td>
+
+
+
+
+            <td>
+                <a th:href="@{editRole/{id}(id=${role.getId()})}">Редактировать</a>
+                <a th:href="@{role{id}(id=${role.getId()})}">Удалить</a>
+            </td>
+        </tr>
+
+
+
+
+
+    </table>
+
+
+
+
 
 </body>
 </html>

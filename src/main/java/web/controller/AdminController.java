@@ -3,10 +3,10 @@ package web.controller;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import web.model.Role;
 import web.model.User;
@@ -14,11 +14,10 @@ import web.service.RoleService;
 import web.service.UserService;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/")
+@Validated
 public class AdminController {
 
 
@@ -31,20 +30,20 @@ public class AdminController {
     private final UserService userService;
     private final UserDetailsService userDetailsService;
     private final RoleService roleService;
-    private  final PasswordEncoder passwordEncoder;
+
 
     public AdminController(UserService userService, UserDetailsService userDetailsService,
-                           RoleService roleService, PasswordEncoder passwordEncoder) {
+                           RoleService roleService) {
 
         this.userService = userService;
         this.userDetailsService = userDetailsService;
         this.roleService = roleService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/admin")
     public String getUsers(Model model) {
-        model.addAttribute("users",userService.getAll());
+        model.addAttribute("usersSet",userService.getAll());
+        model.addAttribute("RolesSet",roleService.getAllRoles());
         return "admins_pages/list";
     }
 
@@ -61,25 +60,29 @@ public class AdminController {
 
     @PostMapping(value = "/saveUser")
     public String saveUser(@Valid @ModelAttribute("user") User user,
-                           BindingResult bindingResult,
-                           @RequestParam(value = "roles_checkbox", required = false) String [] authorities) {
+                            BindingResult bindingResult,
+                            @Valid @RequestParam(value = "roles_checkbox", required = true) String [] authorities,
+                            BindingResult bindingResult1) {
 
         if (bindingResult.hasErrors()) {
             return  "admins_pages/newUser";
         }
 
-
-        Set<Role> roles = new HashSet<>();
-        for (String authority : authorities) {
-            roles.add(roleService.getRoleByName(authority));
-
-
+        if (bindingResult1.hasErrors()) {
+            return  "admins_pages/newUser";
         }
 
 
-        user.setRoles(roles);
-        userService.saveUser(user);
-        return "redirect:/admin";
+           if (authorities!=null) {
+           user.setRoles(roleService.getRolesByRoleNames(authorities));
+
+            userService.saveUser(user);
+            return "redirect:/admin";
+
+       }
+           return "admins_pages/newUser";
+
+
     }
 
 
@@ -97,21 +100,13 @@ public class AdminController {
    @PostMapping(value = "/{id}")
     public String update(@Valid @ModelAttribute("user") User user,
                             BindingResult bindingResult,
-                         @RequestParam(value = "roles_checkbox", required = false) Long [] rolesID) {
+                         @RequestParam(value = "roles_checkbox", required = true) String [] roleNames) {
 
         if (bindingResult.hasErrors()) {
             return  "admins_pages/newUser";
         }
 
-
-       Set<Role> roles = new HashSet<>();
-       for (Long roleId : rolesID) {
-           roles.add(roleService.getRoleById(roleId));
-
-
-       }
-
-       user.setRoles(roles);
+       user.setRoles(roleService.getRolesByRoleNames(roleNames));
        userService.update(user);
         return "redirect:/admin";
    }
@@ -131,6 +126,61 @@ public class AdminController {
         return  "userPage";
 
     }
+
+
+    //Adding roles
+
+
+
+
+
+    @GetMapping("/showFormRoles")
+    public String showFormForAddingRoles(Model model, Role role) {
+        model.addAttribute("Role", role);
+        return "admins_pages/newRole";
+    }
+
+
+    @PostMapping("saveRole")
+    public String saveRole( @Valid @ModelAttribute("Role") Role role,
+                           @RequestParam(value = "roleName",required = true) String roleName,
+                            BindingResult bindingResult)  {
+
+        if (bindingResult.hasFieldErrors(roleName)){
+            return  "admins_pages/newRole";
+        }
+        if (roleName.isEmpty()) {return "admins_pages/newRole" ;}
+
+        roleService.saveRole(new Role(roleName));
+        return "redirect:/admin ";
+
+    }
+
+    @GetMapping("editRole/{id}")
+    public String showEditRoleForm(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("Role",roleService.getRoleById(id));
+        return "admins_pages/editRoleForm";
+    }
+
+    @PostMapping("/role{id}")
+    public String updateRole(@ModelAttribute("Role") Role role) {
+
+//        if (bindingResult.hasErrors()) {
+//            return  "admins_pages/newUser";
+//        }
+
+
+        roleService.update(role);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/role{id}")
+    public String deleteRole(@PathVariable("id") Long id) {
+        roleService.deleteRoleById(id);
+        return "redirect:/admin";
+    }
+
+
 
 
 

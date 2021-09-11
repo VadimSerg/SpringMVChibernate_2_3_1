@@ -49,7 +49,7 @@ public class User implements UserDetails {
             joinColumns =@JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
 
-    private Set<Role> roles =new HashSet<>();
+    private Set< @NotNull Role> roles = new HashSet<>();
 
     public User() {
     }
@@ -95,7 +95,7 @@ public class User implements UserDetails {
     }
 
 
-    public User(@NotBlank(message = "Don't forget to input name") String username, String surname, Integer age, String city, Set<Role> roles) {
+    public User( String username, String surname, Integer age, String city, Set<Role> roles) {
         this.username = username;
         this.surname = surname;
         this.age = age;

@@ -42,6 +42,7 @@
      <p>
          <label for="password"> Введите пароль: </label>
          <input type ="text" th:field="*{password}" id="password"/>
+         <e style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</e>
 
      </p>
 
@@ -53,6 +54,8 @@
                 th:value="${role.getRoleName()}"
 
          />
+         </label>
+
 
 
      </p>
