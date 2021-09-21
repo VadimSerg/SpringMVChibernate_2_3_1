@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import web.model.Role;
 import web.model.User;
@@ -14,10 +13,11 @@ import web.service.RoleService;
 import web.service.UserService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Size;
 
 @Controller
 @RequestMapping("/")
-@Validated
+
 public class AdminController {
 
 
@@ -59,29 +59,27 @@ public class AdminController {
 
 
     @PostMapping(value = "/saveUser")
-    public String saveUser(@Valid @ModelAttribute("user") User user,
-                            BindingResult bindingResult,
-                            @Valid @RequestParam(value = "roles_checkbox", required = true) String [] authorities,
-                            BindingResult bindingResult1) {
+  //  @Validated
+    public  String saveUser(@Valid @ModelAttribute("user") User user,
+                             @Valid @RequestParam(value = "roles_checkbox")  @Size(min=1) String [] authorities,BindingResult bindingResult ) {
 
-        if (bindingResult.hasErrors()) {
-            return  "admins_pages/newUser";
-        }
-
-        if (bindingResult1.hasErrors()) {
+        if (bindingResult.hasErrors()){
             return  "admins_pages/newUser";
         }
 
 
-           if (authorities!=null) {
-           user.setRoles(roleService.getRolesByRoleNames(authorities));
+//        if (authorities.length  ==0) {
+//            System.out.println("USER WASN'T SAVED authorities :length: "+ authorities.length   );
+//            return "admins_pages/newUser";
+//
+//       }
+        System.out.println("authorities :length: "+ authorities.length );
 
-            userService.saveUser(user);
-            return "redirect:/admin";
-
-       }
-           return "admins_pages/newUser";
-
+        user.setRoles(roleService.getRolesByRoleNames(authorities));
+       // user.setRoles(user.getRoles());
+        userService.saveUser(user);
+        System.out.println("USER SAVED WAS Succesfully");
+        return "redirect:/admin";
 
     }
 
@@ -142,16 +140,15 @@ public class AdminController {
 
 
     @PostMapping("saveRole")
-    public String saveRole( @Valid @ModelAttribute("Role") Role role,
-                           @RequestParam(value = "roleName",required = true) String roleName,
-                            BindingResult bindingResult)  {
+    public String saveRole( @Valid @ModelAttribute("Role") Role role
+                            ,BindingResult bindingResult)  {
 
-        if (bindingResult.hasFieldErrors(roleName)){
+        if (bindingResult.hasErrors()){
             return  "admins_pages/newRole";
         }
-        if (roleName.isEmpty()) {return "admins_pages/newRole" ;}
 
-        roleService.saveRole(new Role(roleName));
+
+        roleService.saveRole(role);
         return "redirect:/admin ";
 
     }
@@ -163,11 +160,11 @@ public class AdminController {
     }
 
     @PostMapping("/role{id}")
-    public String updateRole(@ModelAttribute("Role") Role role) {
+    public String updateRole(@Valid @ModelAttribute("Role") Role role,BindingResult bindingResult ) {
 
-//        if (bindingResult.hasErrors()) {
-//            return  "admins_pages/newUser";
-//        }
+        if (bindingResult.hasErrors()) {
+            return  "admins_pages/editRoleForm";
+        }
 
 
         roleService.update(role);

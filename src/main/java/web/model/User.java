@@ -4,10 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -49,7 +46,9 @@ public class User implements UserDetails {
             joinColumns =@JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
 
-    private Set< @NotNull Role> roles = new HashSet<>();
+  //  @NotEmpty(message = "SET shouldn't be empty")
+  //  @Valid
+    private Set< Role> roles = new HashSet<>();
 
     public User() {
     }
