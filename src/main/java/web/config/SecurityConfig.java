@@ -12,15 +12,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import web.config.security.handler.LoginSuccessHandler;
+import web.security.handler.LoginSuccessHandler;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final
-    UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
     private  final LoginSuccessHandler loginSuccessHandler;
 
    @Autowired
@@ -28,12 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.userDetailsService = userDetailsService;
         this.loginSuccessHandler = loginSuccessHandler;
     }
-
-//    @Autowired
-//    protected void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-//      //  auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("ADMIN");
-//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -68,8 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-//        return NoOpPasswordEncoder.getInstance() ;
-         return  new BCryptPasswordEncoder(); // а смысл в нем?? если он
+         return  new BCryptPasswordEncoder();
 
     }
 
